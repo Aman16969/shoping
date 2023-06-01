@@ -28,4 +28,14 @@ public class User {
     @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Items> items=new HashSet<>();
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Address> addresses=new HashSet<>();
+    @OneToMany(mappedBy = "user",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Cart> cart=new HashSet<>();
+    @OneToMany(mappedBy = "user",cascade = CascadeType.DETACH)
+    @JsonIgnore
+    private Set<Orders> orders=new HashSet<>();
+
 }

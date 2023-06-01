@@ -1,11 +1,14 @@
 package com.example.shoping.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import javax.persistence.*;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Getter
@@ -21,6 +24,9 @@ public class Items {
     private Integer stockQuantity;
     private String anyExtraField;
     @ManyToOne(fetch = FetchType.LAZY)
-    @JoinColumn(name="user",nullable = false,referencedColumnName = "userId")
+    @JoinColumn(name = "userId", nullable = false)
     private User user;
+    @OneToMany(mappedBy = "items",cascade = CascadeType.ALL)
+    @JsonIgnore
+    private Set<Cart> cart=new HashSet<>();
 }

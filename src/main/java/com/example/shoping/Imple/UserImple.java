@@ -19,6 +19,7 @@ public class UserImple implements UserService {
     @Override
     public UserDto createUser(UserDto userDto) {
         userDto.setUserId(UUID.randomUUID().toString());
+        userDto.setRole("CUSTOMER");
         User user=this.modelMapper.map(userDto,User.class);
         User createdUser=this.userRepository.save(user);
         return this.modelMapper.map(createdUser,UserDto.class);

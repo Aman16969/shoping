@@ -14,7 +14,7 @@ import javax.persistence.ManyToOne;
 @Setter
 @AllArgsConstructor
 @NoArgsConstructor
-public class ItemsDto {
+public class ItemsDto    {
     private Integer itemId;
     private String name;
     private String description;
