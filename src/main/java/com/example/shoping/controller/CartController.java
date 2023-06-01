@@ -1,5 +1,6 @@
 package com.example.shoping.controller;
 
+import com.example.shoping.dto.CartDto;
 import com.example.shoping.entities.Address;
 import com.example.shoping.entities.Cart;
 import com.example.shoping.services.CartService;
@@ -22,18 +23,19 @@ public class CartController {
         return ResponseEntity.ok(cart);
     }
     @PutMapping("/id/{cartId}/quantity/{quantity}")
-    public ResponseEntity<Cart> updateCartQuantity(@PathVariable Integer cartId, @PathVariable Integer quantity){
-        Cart cart=this.cartService.updateCartQuantity(cartId,quantity);
+    public ResponseEntity<CartDto> updateCartQuantity(@PathVariable Integer cartId, @PathVariable Integer quantity){
+        CartDto cart=this.cartService.updateCartQuantity(cartId,quantity);
         return ResponseEntity.ok(cart);
 
     }
     @PutMapping("/disable/{cartId}")
-    public ResponseEntity<Cart> disableCart(@PathVariable Integer cartId){
-        Cart cart=this.cartService.makeCartInactive(cartId);
+    public ResponseEntity<CartDto> disableCart(@PathVariable Integer cartId){
+        CartDto cart=this.cartService.makeCartInactive(cartId);
         return ResponseEntity.ok(cart);
     }
     @GetMapping("/user/{userId}")
-    public ResponseEntity<List<Cart>> getActiveCartsOfUser(@PathVariable String userId){
-        return ResponseEntity.ok(this.cartService.getAllActiveCartOfUser(userId));
+    public ResponseEntity<List<CartDto>> getActiveCartsOfUser(@PathVariable String userId){
+        List<CartDto> carts=this.cartService.getAllActiveCartOfUser(userId);
+        return ResponseEntity.ok(carts);
     }
 }
