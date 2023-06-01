@@ -3,10 +3,13 @@ package com.example.shoping.controller;
 import java.util.*;
 import com.example.shoping.dto.ItemsDto;
 import com.example.shoping.dto.UserDto;
+import com.example.shoping.entities.Items;
 import com.example.shoping.entities.User;
 import com.example.shoping.repositories.UserRepository;
 import com.example.shoping.services.ItemService;
+import com.example.shoping.utils.ItemBody;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,8 +23,8 @@ public class ItemsController {
     @Autowired
     private UserRepository userRepository;
     @PostMapping("/")
-    public ResponseEntity<ItemsDto> createItem(@RequestBody ItemsDto itemsDto){
-        ItemsDto itemsDto1=this.itemService.createItem(itemsDto);
+    public ResponseEntity<ItemsDto> createItem(@RequestBody ItemBody itemBody){
+        ItemsDto itemsDto1=this.itemService.createItem(itemBody);
         return ResponseEntity.ok(itemsDto1);
     }
     @PutMapping("/stock/{itemId}/quantity/{quantity}")
@@ -39,13 +42,16 @@ public class ItemsController {
         this.itemService.deleteItemById(itemId);
         return ResponseEntity.ok("success");
     }
-    @GetMapping("/")
-    public ResponseEntity<List<ItemsDto>> getAllItems(){
-        return ResponseEntity.ok(this.itemService.getAllItems());
+    @GetMapping("/all")
+    public ResponseEntity<List<ItemsDto>> getAllItem(){
+        List<ItemsDto> itemsDtos=this.itemService.getAllItems();
+
+        return ResponseEntity.ok(itemsDtos);
     }
-    @GetMapping("/{itemId}")
-    public ResponseEntity<ItemsDto> getItemsById(@PathVariable Integer itemId){
-        return ResponseEntity.ok(this.itemService.getItemById(itemId));
+    @GetMapping("/item/{itemId}")
+    public ItemsDto getByIdItem(@PathVariable Integer itemId){
+        ItemsDto itemsDto=this.itemService.getItemById(itemId);
+        return itemsDto;
     }
     @GetMapping("/user/{userId}")
     public ResponseEntity<List<ItemsDto>> getItemsofUser(@PathVariable String userId){

@@ -4,13 +4,14 @@ import com.example.shoping.dto.ItemsDto;
 import com.example.shoping.entities.Items;
 import com.example.shoping.entities.User;
 import com.example.shoping.repositories.ItemRepository;
+import com.example.shoping.repositories.UserRepository;
 import com.example.shoping.services.ItemService;
+import com.example.shoping.utils.ItemBody;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.UUID;
 import java.util.stream.Collectors;
 
 @Service
@@ -19,9 +20,16 @@ public class ItemImple implements ItemService {
     private ItemRepository itemRepository;
     @Autowired
     private ModelMapper modelMapper;
+    @Autowired
+    private UserRepository userRepository;
     @Override
-    public ItemsDto createItem(ItemsDto itemsDto) {
-        Items items=this.modelMapper.map(itemsDto, Items.class);
+    public ItemsDto createItem(ItemBody itemBody) {
+        User user=this.userRepository.findById(itemBody.getUserId()).orElseThrow();
+        Items items=new Items();
+        items.setUser(user);
+        items.setDescription(itemBody.getDescription());
+        items.setName(itemBody.getName());
+        items.setStockQuantity(itemBody.getStockQuantity());
         Items createdItem=this.itemRepository.save(items);
         return this.modelMapper.map(createdItem,ItemsDto.class);
 
@@ -54,12 +62,13 @@ public class ItemImple implements ItemService {
     @Override
     public ItemsDto getItemById(Integer itemId) {
         Items items=this.itemRepository.findById(itemId).orElseThrow();
-        return this.modelMapper.map(itemId,ItemsDto.class);
+        ItemsDto itemsDtos=this.modelMapper.map(items,ItemsDto.class);
+        return itemsDtos;
     }
 
     @Override
     public List<ItemsDto> getAllItems() {
-        List<Items> items=this.itemRepository.findAll();
+        List<Items> items = this.itemRepository.findAll();
         List<ItemsDto> itemsDtos=items.stream().map((item)->this.modelMapper.map(item,ItemsDto.class)).collect(Collectors.toList());
         return itemsDtos;
     }
@@ -68,6 +77,7 @@ public class ItemImple implements ItemService {
     public List<ItemsDto> getAllItemsByUser(User user) {
         List<Items> items=this.itemRepository.findByUser(user);
         List<ItemsDto> itemsDtos=items.stream().map((item)->this.modelMapper.map(item,ItemsDto.class)).collect(Collectors.toList());
+
         return itemsDtos;
     }
 }
