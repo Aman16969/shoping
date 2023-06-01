@@ -3,7 +3,7 @@ package com.example.shoping.entities;
 
 import java.util.*;
 
-import com.example.shoping.utils.CartItemBody;
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
