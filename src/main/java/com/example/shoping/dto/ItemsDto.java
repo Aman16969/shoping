@@ -20,5 +20,6 @@ public class ItemsDto    {
     private String description;
     private Integer stockQuantity;
     private UserDto user;
+    private double price;
 }
 

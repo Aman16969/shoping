@@ -29,6 +29,7 @@ public class ItemImple implements ItemService {
         items.setUser(user);
         items.setDescription(itemBody.getDescription());
         items.setName(itemBody.getName());
+        items.setPrice(itemBody.getPrice());
         items.setStockQuantity(itemBody.getStockQuantity());
         Items createdItem=this.itemRepository.save(items);
         return this.modelMapper.map(createdItem,ItemsDto.class);
@@ -49,6 +50,7 @@ public class ItemImple implements ItemService {
         items.setStockQuantity(itemsDto.getStockQuantity());
         items.setName(itemsDto.getName());
         items.setDescription(itemsDto.getDescription());
+        items.setPrice(itemsDto.getPrice());
         Items newItem=this.itemRepository.save(items);
         return this.modelMapper.map(newItem,ItemsDto.class);
     }

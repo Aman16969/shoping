@@ -34,7 +34,7 @@ public class CartImple implements CartService {
         Items items=this.itemRepository.findById(cartBody.getItemId()).orElseThrow();
         Cart cart=new Cart();
         cart.setUser(user);
-        cart.setItems(items);
+        cart.setItem(items);
         cart.setActive(true);
         cart.setQuantity(cartBody.getQuantity());
 
@@ -53,7 +53,7 @@ public class CartImple implements CartService {
                     CartDto cartdto1=new CartDto();
                     cartdto1.setCartId(item.getCartId());
                     cartdto1.setUser(this.modelMapper.map(item.getUser(), UserDto.class));
-                    cartdto1.setItems(this.modelMapper.map(item.getItems(), ItemsDto.class));
+                    cartdto1.setItems(this.modelMapper.map(item.getItem(), ItemsDto.class));
                     cartdto1.setActive(item.isActive());
                     cartdto1.setQuantity(item.getQuantity());
                     return cartdto1;
@@ -68,7 +68,7 @@ public class CartImple implements CartService {
         Cart cart = this.cartRepository.findById(cartId).orElseThrow();
         cart.setQuantity(quantity);
         Cart cart1 = this.cartRepository.save(cart);
-        Items items = cart1.getItems();
+        Items items = cart1.getItem();
         CartDto cartDto = new CartDto();
         cartDto.setItems(this.modelMapper.map(items, ItemsDto.class));
         cartDto.setCartId(cart1.getCartId());
@@ -83,7 +83,7 @@ public class CartImple implements CartService {
         Cart cart=this.cartRepository.findById(cartId).orElseThrow();
         cart.setActive(false);
         Cart cart1=this.cartRepository.save(cart);
-        Items items=cart1.getItems();
+        Items items=cart1.getItem();
         CartDto cartDto=new CartDto();
         cartDto.setItems(this.modelMapper.map(items, ItemsDto.class));
         cartDto.setCartId(cart1.getCartId());

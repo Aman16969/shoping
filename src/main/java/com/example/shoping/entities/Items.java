@@ -23,10 +23,11 @@ public class Items {
     private String description;
     private Integer stockQuantity;
     private String anyExtraField;
+    private double price;
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "userId", nullable = false)
     private User user;
-    @OneToMany(mappedBy = "items",cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "item",cascade = CascadeType.ALL)
     @JsonIgnore
     private Set<Cart> cart=new HashSet<>();
 }

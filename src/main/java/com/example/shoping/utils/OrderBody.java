@@ -1,19 +1,17 @@
 package com.example.shoping.utils;
 
-import com.example.shoping.entities.User;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
+import java.util.*;
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
-public class ItemBody {
-    private String name;
-    private String description;
-    private Integer stockQuantity;
-    private double price;
+@AllArgsConstructor
+public class OrderBody {
     private String userId;
+    private List<Integer> cartId=new ArrayList<>();
+    private Integer addressId;
+
 }
